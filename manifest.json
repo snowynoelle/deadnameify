@@ -1,0 +1,44 @@
+{
+    "manifest_version": 2,
+    "name": "Deadnameify",
+    "version": "1.0.0", 
+    "author": "Noelle Snow",
+    "description": "Replaces deadnames with your preferred name!",
+    "developer": {
+        "name": "Noelle Snow",
+        "url": "https://deadnameify.mochaaaa.dev/"
+    },
+  
+    "icons": {
+      "32": "icons/deadnameify-32.png",
+      "64": "icons/deadnameify-64.png",
+      "128": "icons/deadnameify-128.png",
+      "256": "icons/deadnameify-256.png"
+    },
+  
+    "content_scripts": [
+      {
+        "matches": ["<all_urls>"],
+        "js": ["deadname.js"]
+      }
+    ],
+
+    "options_ui": {
+      "page": "interface/edit.html",
+      "browser_style": true
+    },
+
+    "browser_action": {
+        "default_popup": "interface/edit.html",
+        "default_title": "Deadnameify"
+    },
+
+    "permissions": ["storage"],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "deadnameify@mochaaaa.dev"
+        }
+    }
+  }
+  

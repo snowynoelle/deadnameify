@@ -1,0 +1,188 @@
+/*
+    This file is part of Deadnameify.
+    Deadnameify is free software: you can redistribute it and/or modify it under 
+    the terms of the GNU General Public License as published by the Free Software Foundation, 
+    either version 1 of the License, or (at your option) any later version.
+
+    Deadnameify is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; 
+    without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    See the GNU General Public License for more details.
+    
+    You should have received a copy of the GNU General Public License 
+    along with Deadnameify. If not, see <https://www.gnu.org/licenses/>.
+*/
+
+html {
+    font-family: "Quicksand", sans-serif;
+}
+
+body {
+    width: 300px;
+    height: fit-content;
+    overflow-y: scroll;
+}
+
+/* Light theme */
+body,
+body.light {
+    color: #222;
+    background-color: #f3f2f2;
+}
+
+/* Dark theme */
+body.dark {
+    color: #eee;
+    background: #252525;
+}
+
+.name {
+    border: 2px solid #ffffffaa;
+    background-color: #00000000;
+    margin-top: 6px;
+    border-radius: 8px;
+}
+
+.nameContainer {
+    border-bottom: 2px solid #ffffffaa;
+    border-top: 2px solid #ffffffaa;
+    border-radius: 2px;
+}
+
+.minimize {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    width: 100%;
+    background-color: #00000000;
+    border-top: none;
+    border-bottom: none;
+    border-left: 2px solid #ffffffaa;
+    border-right: 2px solid #ffffffaa;
+    border-radius: 2px;
+    transition: 300ms ease; 
+}
+
+.minimize:hover {
+    background-color: #90ff9027;
+}
+
+.minimize:active {
+    background-color: #90ff9040;
+}
+
+.addMoreNames {
+    margin-top: 4px;
+    width: 100%;
+    background-color: #00000000;
+    border-top: 2px solid #ffffffaa;
+    border-bottom: 2px solid #ffffffaa;
+    border-left: 2px solid #ffffffaa;
+    border-right: 2px solid #ffffffaa;
+    border-radius: 4px;
+    transition: 300ms ease; 
+}
+
+.addMoreNames:hover {
+    background-color: #ebff9027;
+}
+
+.addMoreNames:active {
+    background-color: #ebff9040;
+}
+
+.removeDeadname {
+    margin-top: 4px;
+    width: 100%;
+    background-color: #00000000;
+    border-top: 2px solid #ffffffaa;
+    border-bottom: 2px solid #ffffffaa;
+    border-left: 2px solid #ffffffaa;
+    border-right: 2px solid #ffffffaa;
+    border-radius: 4px;
+    transition: 300ms ease; 
+}
+
+.removeDeadname:hover {
+    background-color: #ff909027;
+}
+
+.removeDeadname:active {
+    background-color: #ff909040;
+}
+
+.minimizeContent {
+    display: none;
+}
+
+.case {
+    width: 1em;
+    height: 1em;
+    background-color: #ffffff44;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    padding-bottom: 2px;
+    transition: 300ms ease;
+    margin-top: -1px;
+}
+
+.case:checked {
+    background-color: #87c5ffdd;
+}
+
+@media (prefers-color-scheme: dark) {
+
+    /* dark theme */
+    body {
+        color: #eee;
+        background: #252525;
+    }
+
+    .name {
+        color: #eee;
+    }
+
+    .minimize {
+        color: #eee
+    }
+
+    .addMoreNames {
+        color: #eee
+    }
+}
+
+/* Input labels */
+
+/* Mainly label things, also descriptors!! */
+
+.transgender {
+    background: linear-gradient(to right, #5BCEFA, #F5A9B8, #fff, #F5A9B8, #5BCEFA);
+    background-clip: text;
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+}
+
+.author {
+    font-size: 8px;
+    opacity: 0.75;
+}
+
+.advocacy {
+    font-size: 8px;
+    opacity: 0.75;
+    margin-top: -6px;
+}
+
+/* unvisited link */
+a:link {
+    color: rgb(208, 122, 255);
+}
+
+/* visited link */
+a:visited {
+    color: rgb(122, 251, 255); 
+}
