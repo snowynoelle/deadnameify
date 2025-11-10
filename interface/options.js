@@ -20,6 +20,9 @@
 var deadnameCount = 1;
 
 function createDeadnameElem(firstNameString = null, middleNameString = null, lastNameString = null, isCaseSensitiveToggle = null, shouldHaveBTN2 = false) {
+    if (typeof(firstNameString) != "string") {
+        firstNameString = null;
+    }
     // div to contain everything type sh-
     var div = document.createElement('div');
     div.classList.add("nameContainer");
@@ -136,11 +139,13 @@ function removeDeadname() {
 
     // :3
     parentElement.remove();
+
+    deadnameCount--;
 }
 
 function getAllNameData() {
     var nameContainers = document.getElementsByClassName("nameForm")
-    var allDeadnames = []
+    var deadnames = []
 
     // for all nameforms
     for (let i = 0; i < nameContainers.length; i++) {
@@ -158,7 +163,7 @@ function getAllNameData() {
 
         // push it all to an array that we're gonna save
         // later on, lol
-        allDeadnames.push({
+        deadnames.push({
             firstName: firstName,
             middleName: middleName,
             lastName: lastName,
@@ -168,7 +173,11 @@ function getAllNameData() {
 
     // if this element dosent exist i will blow up.
     var prefName = document.getElementsByClassName("prefNameForm")[0].children
-
+    
+    let aggressiveToggle = document.getElementById("aggressive").checked
+    let aggressivePronouns = document.getElementById("aggressive_pronouns").value
+    let aggressivePreferred = document.getElementById("aggressive_pref_pronouns").value
+    
     // same thing as deadnames, just no case sensitive check
     // how the hell would a preferred name have a case sensitive
     // check like what???
@@ -178,11 +187,34 @@ function getAllNameData() {
         lastName: prefName[2].value
     }
 
+    let advanced = {
+        options: {
+            aggressiveMode: aggressiveToggle
+        }
+    }
+
+    let aggressive = {
+        pronouns: aggressivePronouns,
+        preferred: aggressivePreferred
+    }
+
     // if you do not save i will combust into flames
     browser.storage.sync.set({
-        deadnames: allDeadnames,
-        preferred: preferred
+        deadnames: deadnames,
+        preferred: preferred,
+        advanced: advanced,
+        aggressive: aggressive
     })
+}
+
+function dumbCheckboxTransition() {
+    if (document.getElementById("aggressive").checked) {
+        document.getElementById("aggressive_pronouns").disabled = false
+        document.getElementById("aggressive_pref_pronouns").disabled = false
+    } else {
+        document.getElementById("aggressive_pronouns").disabled = true
+        document.getElementById("aggressive_pref_pronouns").disabled = true
+    }
 }
 
 function toggleMinMax() {
@@ -206,9 +238,30 @@ function toggleMinMax() {
 }
 
 var shouldContainRemoveButton = false;
+let hasFinishedAdvanced = false
+let hasFinishedAggressive = false;
 
 // once all the content in the page is loaded
 document.addEventListener('DOMContentLoaded', function () {
+    browser.storage.sync.get("advanced").then((data) => {
+        if (data != null && data.advanced != null && data.advanced.options != null) {
+            document.getElementById("aggressive").checked = data.advanced.options.aggressiveMode
+            hasFinishedAdvanced = true
+        } else {
+            hasFinishedAdvanced = true
+        }
+    })
+
+    browser.storage.sync.get("aggressive").then((data) => {
+        if (data != null && data.aggressive != null && data.aggressive.pronouns != null && data.aggressive.preferred != null) {
+            document.getElementById("aggressive_pronouns").value = data.aggressive.pronouns
+            document.getElementById("aggressive_pref_pronouns").value = data.aggressive.preferred
+            hasFinishedAggressive = true
+        } else {
+            hasFinishedAggressive = true
+        }
+    })
+    
     // load all the deadnames and the preffered name for the user
     browser.storage.sync.get("deadnames").then((value) => {
         browser.storage.sync.get("preferred").then((prefValue) => {
@@ -216,8 +269,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // does not include preffered names as some would rather not go by
             // a name, sooooo :3
-            if (value === null || prefValue === null || value.deadnames === null) {
-                createNewNameElement()
+            if (value === undefined || prefValue === undefined || value.deadnames === undefined) {
+                createNewNameElement(null, null, null, null, false)
             } else {
                 value.deadnames.forEach((val) => {
                     createNewNameElement(val.firstName, val.middleName, val.lastName, val.isCaseSensitive, shouldContainRemoveButton)
@@ -226,12 +279,15 @@ document.addEventListener('DOMContentLoaded', function () {
             }
 
             // set preferred name
-            document.getElementById("pref_first").value = prefValue.preferred.firstName;
-            document.getElementById("pref_middle").value = prefValue.preferred.middleName;
-            document.getElementById("pref_last").value = prefValue.preferred.lastName;
+            if (prefValue.preferred !== undefined) {
+                document.getElementById("pref_first").value = prefValue.preferred.firstName;
+                document.getElementById("pref_middle").value = prefValue.preferred.middleName;
+                document.getElementById("pref_last").value = prefValue.preferred.lastName;
+            }
 
             // for all minmax (minimize-maximize elements)
             var allMinMaxElements = document.getElementsByClassName("minimize")
+
             Array.from(allMinMaxElements).forEach(domElement => {
                 // UNLESS if the element is a preferred name, assume that the user
                 // wants to keep deadname private, so it minimizes it :3
@@ -250,7 +306,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
             // scan for name data
             setInterval(() => {
-                getAllNameData()
+                if (hasFinishedAggressive && hasFinishedAdvanced) {
+                    getAllNameData()
+                    dumbCheckboxTransition()
+                }
             }, 100);
         });
     });

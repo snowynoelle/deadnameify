@@ -42,6 +42,18 @@ body.dark {
     border-radius: 8px;
 }
 
+.pronouns {
+    border: 2px solid #ffffffaa;
+    background-color: #00000000;
+    margin-top: 6px;
+    border-radius: 8px;
+    transition: 200ms ease;
+}
+
+.pronouns:disabled {
+    opacity: 0.4;
+}
+
 .nameContainer {
     border-bottom: 2px solid #ffffffaa;
     border-top: 2px solid #ffffffaa;
@@ -134,7 +146,6 @@ body.dark {
 }
 
 @media (prefers-color-scheme: dark) {
-
     /* dark theme */
     body {
         color: #eee;
@@ -142,6 +153,10 @@ body.dark {
     }
 
     .name {
+        color: #eee;
+    }
+
+    .pronouns {
         color: #eee;
     }
 
@@ -175,6 +190,13 @@ body.dark {
     font-size: 8px;
     opacity: 0.75;
     margin-top: -6px;
+}
+
+.pronounsText {
+    font-size: 12px;
+    padding-bottom: 0;
+    margin-bottom: 0;
+
 }
 
 /* unvisited link */
