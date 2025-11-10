@@ -127,8 +127,6 @@ setInterval(() => {
                 let middleRegex = new RegExp(deadname.middleName, caseRegex)
                 let lastRegex = new RegExp(deadname.lastName, caseRegex)
 
-                // only applies to aggressive mode
-
                 // what the text do tho
                 let originalText = node.textContent
 
@@ -140,30 +138,40 @@ setInterval(() => {
 
                 // might need to implement an aggressive mode.
                 if (currentOptions.aggressiveMode) {
-                    newText = newText.replace(firstRegex, preferred.firstName).replace(middleRegex, preferred.middleName).replace(lastRegex, preferred.lastName)
+                    newText = newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                        .replace(middleRegex, (name) => matchCase(preferred.middleName, name))
+                        .replace(lastRegex, (name) => matchCase(preferred.lastName, name))
                 } else {
                     // for some people, they use a middle name for their last name on websites
                     if (hasFirstName && hasMiddleName && !hasLastName) {
                         // THIS DEPENDS ON A CHECK
+                        // if user has last name specified, use middle and last
+                        // theres probably a bug here but idc
                         if (preferred.lastName !== null && preferred.lastName !== "") {
-                            newText = newText.replace(firstRegex, preferred.firstName).replace(middleRegex, preferred.middleName + " " + preferred.lastName)
+                            newText = newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                                .replace(middleRegex, (name) => matchCase(preferred.middleName, name) + " " + matchCase(preferred.lastName, name))
                         } else {
-                            newText = newText.replace(firstRegex, preferred.firstName).replace(middleRegex, preferred.middleName)
+                            newText = newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                                .replace(middleRegex, (name) => matchCase(preferred.middleName, name))
                         }
                     }
 
-                    // in other instances, some people use only firstname lastname.
+                    // in other instances, some people use only first name last name.
                     else if (hasFirstName && !hasMiddleName && hasLastName) {
                         if (preferred.middleName !== null && preferred.middleName !== "") {
-                            newText = newText.replace(firstRegex, preferred.firstName).replace(lastRegex, preferred.middleName + " " + preferred.lastName)
+                            newText = newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                            .replace(lastRegex, (name) => matchCase(preferred.middleName, name) + " " + matchCase(preferred.lastName, name))
                         } else {
-                            newText = newText.replace(firstRegex, preferred.firstName).replace(lastRegex, preferred.lastName)
+                            newText = newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                                .replace(lastRegex, (name) => matchCase(preferred.lastName, name))
                         }
                     }
 
                     // this is assuming the usage of a full name
                     else if (hasFirstName && hasMiddleName && hasLastName) {
-                        newText.replace(firstRegex, preferred.firstName).replace(middleRegex, preferred.middleName).replace(lastRegex, preferred.lastName)
+                        newText.replace(firstRegex, (name) => matchCase(preferred.firstName, name))
+                            .replace(middleRegex, (name) => matchCase(preferred.middleName, name))
+                            .replace(lastRegex, (name) => matchCase(preferred.lastName, name))
                     }
                 }
                 
@@ -177,8 +185,8 @@ setInterval(() => {
                 let possesivePreferred = preferredPronouns[2]
                 let reflexivePreferred = preferredPronouns[3]
 
-                // Use word boundaries so short pronouns (e.g. "he") don't match inside other words (e.g. "she", "the").
-                // Use case-insensitive flag and a replacer to preserve capitalization from the original match.
+                // use boundaries so short pronouns (e.g. "he") don't match inside other words (e.g. "she", "the").
+                // also case sensitive flag cuz why not
                 replacePronouns.forEach((pronounSet) => {
                     let subjectPattern = "\\b" + escapeRegExp(pronounSet[0]) + "\\b"
                     let objectivePattern = "\\b" + escapeRegExp(pronounSet[1]) + "\\b"
@@ -193,10 +201,10 @@ setInterval(() => {
                     let originalText = node.textContent
                     let newText = originalText
 
-                    newText = newText.replace(subject, (m) => matchCase(subjectPreferred, m))
-                        .replace(objective, (m) => matchCase(objectivePreferred, m))
-                        .replace(possesive, (m) => matchCase(possesivePreferred, m))
-                        .replace(reflexive, (m) => matchCase(reflexivePreferred, m))
+                    newText = newText.replace(subject, (pronoun) => matchCase(subjectPreferred, pronoun))
+                        .replace(objective, (pronoun) => matchCase(objectivePreferred, pronoun))
+                        .replace(possesive, (pronoun) => matchCase(possesivePreferred, pronoun))
+                        .replace(reflexive, (pronoun) => matchCase(reflexivePreferred, pronoun))
 
                     node.textContent = newText
                 })

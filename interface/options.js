@@ -262,12 +262,12 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
     
-    // load all the deadnames and the preffered name for the user
+    // load all the deadnames and the preferred name for the user
     browser.storage.sync.get("deadnames").then((value) => {
         browser.storage.sync.get("preferred").then((prefValue) => {
             // if values somehow dont exist, or for some reason just dont work?
 
-            // does not include preffered names as some would rather not go by
+            // does not include preferred names as some would rather not go by
             // a name, sooooo :3
             if (value === undefined || prefValue === undefined || value.deadnames === undefined) {
                 createNewNameElement(null, null, null, null, false)
