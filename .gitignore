@@ -1,0 +1,6 @@
+# firefox ext
+web-ext-artifacts
+
+# stinky macos
+.DS_Store
+__MACOSX

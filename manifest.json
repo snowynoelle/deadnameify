@@ -37,7 +37,10 @@
 
     "browser_specific_settings": {
         "gecko": {
-            "id": "deadnameify@mochaaaa.dev"
+            "id": "deadnameify@mochaaaa.dev",
+            "data_collection_permissions": {
+              "required": ["none"]
+            }
         }
     }
   }
