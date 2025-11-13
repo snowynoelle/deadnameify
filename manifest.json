@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Deadnameify",
-    "version": "1.0.0", 
+    "version": "1.0.1", 
     "author": "Noelle Snow",
     "description": "Replaces deadnames with your preferred name!",
     "developer": {

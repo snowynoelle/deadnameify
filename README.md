@@ -34,3 +34,4 @@ Deadnameify is a Firefox Add-on designed to replace deadnames with your preferre
 Deadnameify is licensed under the [**GNU General Public License v1.0+**](./LICENSE).
 
 happy pride month :3 🏳️‍⚧️
+###### PLEASE SOMEONE GIVE ME A BETTER NAME FOR THIS PROJECT IT SOUNDS REALLY BAD ok thank you :3
