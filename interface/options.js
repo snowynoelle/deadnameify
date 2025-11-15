@@ -58,13 +58,13 @@ function createDeadnameElem(firstNameString = null, middleNameString = null, las
 
     var middleName = document.createElement("input");
     middleName.classList.add("name");
-    firstName.classList.add("middle");
+    middleName.classList.add("middle");
     middleName.type = "text";
     middleName.placeholder = "Middle Name(s)";
 
     var lastName = document.createElement("input");
     lastName.classList.add("name");
-    firstName.classList.add("last");
+    lastName.classList.add("last");
     lastName.type = "text";
     lastName.placeholder = "Last Name";
 
